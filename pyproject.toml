@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eae-runtime"
+version = "2.0.0"
+description = "A programmable, block-local reverse-mode execution engine that orchestrates PyTorch's local autograd (Explicit Adjoint Exposure runtime)."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[tool.setuptools.packages.find]
+include = ["eae_runtime*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
