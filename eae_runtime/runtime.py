@@ -94,6 +94,12 @@ class EAERuntime:
             loss = loss_fn(output_leaf)
             loss.backward()
 
+        if output_leaf.grad is None:
+            raise RuntimeError(
+                "loss_fn produced no gradient w.r.t. the model output; make "
+                "sure it actually depends on its input tensor."
+            )
+
         initial_adjoint = AdjointState(
             tensor=output_leaf.grad.detach(),
             layer_id=len(self.blocks),
@@ -117,8 +123,8 @@ class EAERuntime:
             param_grads = self.scheduler.run(context)
 
         if self.config.grad_clip_norm is not None:
-            total_sq = sum((g.float() ** 2).sum() for g in param_grads.values())
-            total_norm = total_sq.sqrt() if param_grads else torch.tensor(0.0)
+            squared_norms = [(g.float() ** 2).sum() for g in param_grads.values()]
+            total_norm = torch.stack(squared_norms).sum().sqrt() if squared_norms else torch.tensor(0.0)
             if total_norm > self.config.grad_clip_norm:
                 scale = self.config.grad_clip_norm / (total_norm + 1e-6)
                 param_grads = {p: g * scale for p, g in param_grads.items()}
@@ -150,11 +156,13 @@ class EAERuntime:
             self.optimizer.zero_grad(set_to_none=True)
 
         self.last_loss = loss.item()
+        total_grad_norm = 0.0
+        if param_grads:
+            squared_norms = [(g.float() ** 2).sum() for g in param_grads.values()]
+            total_grad_norm = float(torch.stack(squared_norms).sum().sqrt().item())
         self.last_grad_stats = {
             "num_params_with_grad": len(param_grads),
-            "total_grad_norm": float(
-                sum((g.float() ** 2).sum() for g in param_grads.values()).sqrt().item()
-            ) if param_grads else 0.0,
+            "total_grad_norm": total_grad_norm,
         }
         self.event_bus.emit(EventType.TRAIN_STEP_FINISHED, loss=self.last_loss, **self.last_grad_stats)
         return self.last_loss

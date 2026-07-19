@@ -101,7 +101,7 @@ def test_transformer_stack_trains_with_full_pass_pipeline_and_optimizer():
     runtime = EAERuntime(blocks, optimizer, cfg)
 
     losses = [runtime.train_step(x, lambda out: nn.functional.mse_loss(out, target)) for _ in range(15)]
-    assert all(torch.isfinite(torch.tensor(l)) for l in losses)
+    assert all(torch.isfinite(torch.tensor(loss_val)) for loss_val in losses)
     assert losses[-1] < losses[0]
 
     report = runtime.profiler.report()

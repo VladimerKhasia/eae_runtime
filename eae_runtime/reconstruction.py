@@ -54,9 +54,10 @@ class ReconstructionEngine:
                 f"block output shape {tuple(out.shape)} for block '{block_name}'"
             )
 
+        inputs: List[torch.Tensor] = [x, *params]
         grads = torch.autograd.grad(
             outputs=out,
-            inputs=[x] + params,
+            inputs=inputs,
             grad_outputs=grad_outputs,
             retain_graph=False,
             allow_unused=True,

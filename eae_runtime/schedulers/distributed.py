@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import warnings
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 import torch
 import torch.nn as nn
@@ -9,6 +9,7 @@ import torch.nn as nn
 from .base import BaseScheduler, ReverseContext
 from .sequential import SequentialScheduler
 
+dist: Optional[Any]
 try:
     import torch.distributed as dist
 except ImportError:  # pragma: no cover
@@ -50,6 +51,7 @@ class DistributedScheduler(BaseScheduler):
             return self._fallback.run(context)
 
         # -- real multi-process path -------------------------------------
+        assert dist is not None  # guaranteed by _is_distributed_active()
         rank = dist.get_rank()
         world_size = dist.get_world_size()
         num_blocks = len(context.blocks)

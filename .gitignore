@@ -1,1 +1,28 @@
+# Local virtualenvs
 eae_env/
+.venv/
+venv/
+
+# Python build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+dist/
+*.egg
+
+# setuptools_scm-generated version file (derived from git tags at build time)
+eae_runtime/_version.py
+
+# Test / coverage / type-checker caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store

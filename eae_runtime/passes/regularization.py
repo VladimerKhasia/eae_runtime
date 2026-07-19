@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Optional
+
 import torch
 
 from ..adjoint import AdjointState
@@ -30,7 +32,7 @@ class GaussianNoisePass(EAEPass):
 
     name = "GaussianNoisePass"
 
-    def __init__(self, std: float = 0.0, generator: torch.Generator = None):
+    def __init__(self, std: float = 0.0, generator: Optional[torch.Generator] = None):
         self.std = std
         self.generator = generator
 

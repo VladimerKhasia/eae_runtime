@@ -16,7 +16,7 @@ def test_default_config_values():
 
 
 def test_config_seed_sets_torch_manual_seed():
-    cfg = RuntimeConfig(seed=123)
+    RuntimeConfig(seed=123)
     t1 = torch.randn(4)
     RuntimeConfig(seed=123)
     t2 = torch.randn(4)
@@ -44,6 +44,17 @@ def test_decompose_list_of_modules():
     mods = [nn.Linear(2, 2), nn.Tanh()]
     blocks = BlockDecomposer.decompose(mods)
     assert blocks == mods
+
+
+def test_decompose_module_list():
+    """nn.ModuleList is the idiomatic container for a repeated Transformer
+    block stack (`nn.ModuleList([Block() for _ in range(depth)])`) and must
+    decompose the same way nn.Sequential does."""
+    mods = nn.ModuleList([nn.Linear(4, 4), nn.GELU(), nn.Linear(4, 4)])
+    blocks = BlockDecomposer.decompose(mods)
+    assert blocks == list(mods)
+    assert isinstance(blocks[0], nn.Linear)
+    assert isinstance(blocks[1], nn.GELU)
 
 
 def test_decompose_single_module_wraps_in_list():

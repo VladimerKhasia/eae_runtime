@@ -1,8 +1,8 @@
-# EAE Runtime v2
+# A programmable reverse-mode runtime for PyTorch
 
-A standalone, production-quality runtime that replaces PyTorch's monolithic
+A production-quality runtime that replaces PyTorch's monolithic
 `backward()` with a programmable, block-local reverse-mode execution engine
-implementing **Explicit Adjoint Exposure (EAE)**.
+implementing **Explicit Adjoint Exposure (EAE)**. It builds on the the top of [EAE](https://github.com/VladimerKhasia/eae) and turnes reverse-mode execution itself into schedulable runtime. 
 
 The runtime is **not** a new autodiff engine. It orchestrates many local
 autograd computations using PyTorch's existing local autograd:
