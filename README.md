@@ -181,7 +181,7 @@ The suite (`tests/`) covers:
 * Real two-process `torch.distributed` (gloo) correctness check for
   `DistributedScheduler` (skips gracefully if the sandbox blocks socket use)
 
-## Non-goals (by design, matching the v2 spec)
+## Non-goals by design
 
 * Automatic partitioning of arbitrary `nn.Module` graphs — blocks are
   specified manually or via `BlockDecomposer.from_sequential`/`from_list`.
