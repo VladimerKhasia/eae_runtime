@@ -18,8 +18,10 @@ type, no compiler, no FX, no PyTorch internals modified.
 ## Install
 
 ```bash
-pip install -e .
+pip install eae-runtime  
 ```
+
+<!-- # pip install -e . -->
 
 ## Quick start
 
@@ -157,6 +159,8 @@ print(runtime.profiler.report())
 ## Testing
 
 ```bash
+git clone https://github.com/VladimerKhasia/eae_runtime
+cd eae_runtime
 pip install -e ".[dev]"
 pytest
 ```

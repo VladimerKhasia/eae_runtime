@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-07-19
+
+### Changed
+- Updated README install instructions to show `pip install eae-runtime` as the
+  primary install method, with the editable/dev install moved to its own
+  Development section.
+
 ## [0.1.0] - 2026-07-19
 
 ### Added
@@ -22,5 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   memory management, boundary store, and a real two-process distributed
   correctness check.
 
-<!-- [Unreleased]: https://github.com/VladimerKhasia/eae_runtime/compare/v0.1.0...HEAD -->
+[Unreleased]: https://github.com/VladimerKhasia/eae_runtime/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/VladimerKhasia/eae_runtime/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/VladimerKhasia/eae_runtime/releases/tag/v0.1.0
