@@ -196,7 +196,7 @@ The suite (`tests/`) covers:
   Transformer-style models with repeated block structure first.
 
 
-## implementation of [EAE paper](https://github.com/VladimerKhasia/eae) Alg. 2
+## Implementation of [EAE paper](https://github.com/VladimerKhasia/eae) Alg. 2
 
 ```python
 #@title Memory-Optimized EAE (EAE-GC) with `eae-runtime` & VRAM Profiling
